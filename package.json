@@ -1,0 +1,31 @@
+{
+  "name": "nedb-models",
+  "version": "0.0.1",
+  "description": "A simple and useful model wrapper for nedb (using nedb-promises).",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec --timeout 10000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bajankristof/nedb-models.git"
+  },
+  "keywords": [
+    "nedb",
+    "model",
+    "models"
+  ],
+  "author": "Kristóf Baján",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bajankristof/nedb-models/issues"
+  },
+  "homepage": "https://github.com/bajankristof/nedb-models#readme",
+  "dependencies": {
+    "nedb-promises": "^1.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.0.1",
+    "mocha": "^3.4.2"
+  }
+}
