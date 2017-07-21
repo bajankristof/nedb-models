@@ -1,6 +1,6 @@
 {
   "name": "nedb-models",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple and useful model wrapper for nedb (using nedb-promises).",
   "main": "index.js",
   "scripts": {
@@ -22,10 +22,10 @@
   },
   "homepage": "https://github.com/bajankristof/nedb-models#readme",
   "dependencies": {
-    "nedb-promises": "^1.0.3"
+    "nedb-promises": "^1.1.0"
   },
   "devDependencies": {
-    "chai": "^4.0.1",
+    "chai": "^4.1.0",
     "mocha": "^3.4.2"
   }
 }
