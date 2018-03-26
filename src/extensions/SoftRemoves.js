@@ -21,7 +21,6 @@ const
 class SoftRemoves extends Extension {
     apply() {
         let __class = this.__class,
-            update = __class.update,
             hasRemovedAt = query => {
                 return query.hasOwnProperty('removedAt')
                     || (query.hasOwnProperty('$not')
@@ -75,13 +74,13 @@ class SoftRemoves extends Extension {
 
             return async function (query = {}, options) {
                 let values = { $set: { removedAt: Date.now() } }
-                return await update.call(__class, query, values, options)
+                return await __class.update(query, values, options)
             }
         }, true)
 
-        this.setStatic('findRemoved', async function (query = {}, projection) {
+        this.setStatic('findRemoved', function (query = {}, projection) {
             query = augmenter(query)({ $not: { removedAt: null } })
-            return await __class.find(query, projection)
+            return __class.find(query, projection)
         })
 
         return true
