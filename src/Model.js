@@ -82,11 +82,11 @@ class Model {
      * @async
      */
     async save() {
-        var
+        let
             result = this._id
                 ? await this.getClass().update(
                     { _id: this._id },
-                    this.toPOJO(),
+                    { $set: this.toPOJO() },
                     { returnUpdatedDocs: true }
                 )
                 : await this.getClass().insert(
