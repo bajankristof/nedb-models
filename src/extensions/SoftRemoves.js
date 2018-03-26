@@ -86,7 +86,7 @@ class SoftRemoves extends Extension {
         this.setStatic('restore', async function (query = {}) {
             return await __class.update(
                 query,
-                { $set: removedAt: null },
+                { $set: { removedAt: null } },
                 { returnUpdatedDocs: true }
             )
         })
