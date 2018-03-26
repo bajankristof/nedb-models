@@ -97,6 +97,8 @@ class Extension {
      * @return {this}
      */
     extendDefaults(value) {
+        let __class = this.__class
+
         this.setStatic('defaults', defaults => {
             return function () {
                 return augmenter(
