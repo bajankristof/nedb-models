@@ -457,8 +457,8 @@ The extension sets up:
 - `remove` async static method just updates the `removedAt` property with the current timestamp
 - `find`, `findOne` and `count` automatically exclude models that have a non null removedAt property
 - `findRemoved` async static method to query removed models
-- `restore` async instance method to restore a removed model (TODO)
-- `restore` async static method to restore models (TODO)  
+- `restore` async instance method to restore a removed model
+- `restore` async static method to restore models  
 <a name="Timestamps"></a>
 
 ## Timestamps
