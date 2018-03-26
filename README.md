@@ -15,18 +15,18 @@ const { Model } = require('nedb-models')
 
 class Book extends Model {
 	static datastore() {
-  	return {
-    	filename: 'books.db'
+      	return {
+        	filename: 'books.db'
+        }
+            
+        // same as
+        // return 'books.db'
     }
-        
-    // same as
-    // return 'books.db'
-  }
     
-  async sell() {
-    this.soldAt = Date.now()
-    return await this.save()
-  }
+    async sell() {
+        this.soldAt = Date.now()
+        return await this.save()
+    } 
 }
 
 Book.find()

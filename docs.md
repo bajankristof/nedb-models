@@ -133,9 +133,9 @@ Extend the default arguments
 of built-in static methods.
 
 **Keys**:
-`'query'` - used in `Model.find`, `Model.findOne` and `Model.count`
-`'projection'` - used in `Model.find` and `Model.findOne`
-`'values'` - used in `Model.insert`
+- `'query'` - used in `Model.find`, `Model.findOne` and `Model.count`
+- `'projection'` - used in `Model.find` and `Model.findOne`
+- `'values'` - used in `Model.insert`
 
 **Kind**: instance method of [<code>Extension</code>](#Extension)  
 <table>
