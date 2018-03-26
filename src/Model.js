@@ -30,7 +30,7 @@ class Model {
     }
 
     /**
-     * Get the models datastore configuration.
+     * Get the datastore configuration of the model.
      * For more information visit:
      * https://github.com/louischatriot/nedb#creatingloading-a-database
      * 
@@ -39,6 +39,34 @@ class Model {
      */
     static datastore() {
         return null
+    }
+
+    /**
+     * Get the defaults of the model.
+     *
+     * **Note**:
+     * 
+     * The returned object **has** to contain at least
+     * three objects:
+     * - `query` - used in `Model.find`, `Model.findOne` and `Model.count`
+     * - `projection` - used in `Model.find` and `Model.findOne`
+     * - `values` - used in `Model.insert`
+     *
+     * It's good practice to **not** return a
+     * completely new value, but return an
+     * extended one based on the parent's defaults.
+     *
+     * @example
+     * return extend(true, super.defaults(), { ... })
+     * 
+     * @return {Object}
+     */
+    static defaults() {
+        return {
+            query: {},
+            projection: {},
+            values: {}
+        }
     }
 
     /**
@@ -149,8 +177,8 @@ class Model {
      * @static
      */
     static find(query = {}, projection) {
-        query = augmenter(this.__defaults.query)(query)
-        projection = augmenter(this.__defaults.projection)(projection)
+        query = augmenter(this.defaults().query)(query)
+        projection = augmenter(this.defaults().projection)(projection)
 
         let cursor = datastore(this)().find(query, projection),
             exec = cursor.exec
@@ -175,8 +203,8 @@ class Model {
      * @async
      */
     static async findOne(query = {}, projection) {
-        query = augmenter(this.__defaults.query)(query)
-        projection = augmenter(this.__defaults.projection)(projection)
+        query = augmenter(this.defaults().query)(query)
+        projection = augmenter(this.defaults().projection)(projection)
 
         return converter(this)(
             await datastore(this)().findOne(query, projection)
@@ -193,7 +221,7 @@ class Model {
      * @async
      */
     static async count(query = {}) {
-        query = augmenter(this.__defaults.query)(query)
+        query = augmenter(this.defaults().query)(query)
 
         return converter(this)(
             await datastore(this)().count(query)
@@ -210,7 +238,7 @@ class Model {
      * @async
      */
     static async insert(values) {
-        let augment = augmenter(this.__defaults.values)
+        let augment = augmenter(this.defaults().values)
 
         values = Array.isArray(values)
             ? values.map(augment)
@@ -297,13 +325,6 @@ class Model {
 
         return extension.apply()
     }
-}
-
-// Burn in the default args so that they can be changed.
-Model.__proto__.__defaults = {
-    query: {},
-    projection: {},
-    values: {}
 }
 
 module.exports = Model

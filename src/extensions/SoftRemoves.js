@@ -27,7 +27,7 @@ class SoftRemoves extends Extension {
                         && query.$not.hasOwnProperty('removedAt'))
             }
 
-        this.extendDefaults('values', { removedAt: null })
+        this.extendValues({ removedAt: null })
 
         this.set('forceRemove', async function () {
             if ( ! this._id) return 0

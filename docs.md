@@ -22,8 +22,10 @@
     * [.extend(key, value)](#Extension+extend) ⇒ <code>this</code>
     * [.setStatic(key, value, fn)](#Extension+setStatic) ⇒ <code>this</code>
     * [.extendStatic(key, value)](#Extension+extendStatic) ⇒ <code>this</code>
-    * [.extendDefaults(key, value)](#Extension+extendDefaults) ⇒ <code>this</code>
+    * [.extendDefaults(value)](#Extension+extendDefaults) ⇒ <code>this</code>
     * [.extendQuery(value)](#Extension+extendQuery) ⇒ <code>this</code>
+    * [.extendProjection(value)](#Extension+extendProjection) ⇒ <code>this</code>
+    * [.extendValues(value)](#Extension+extendValues) ⇒ <code>this</code>
 
 <a name="Extension+apply"></a>
 
@@ -128,14 +130,9 @@ Extend a static property.
 
 <a name="Extension+extendDefaults"></a>
 
-### extension.extendDefaults(key, value) ⇒ <code>this</code>
-Extend the default arguments
-of built-in static methods.
-
-**Keys**:
-- `'query'` - used in `Model.find`, `Model.findOne` and `Model.count`
-- `'projection'` - used in `Model.find` and `Model.findOne`
-- `'values'` - used in `Model.insert`
+### extension.extendDefaults(value) ⇒ <code>this</code>
+Extend the value returned by the `defaults`
+static method of the model.
 
 **Kind**: instance method of [<code>Extension</code>](#Extension)  
 <table>
@@ -146,9 +143,6 @@ of built-in static methods.
   </thead>
   <tbody>
 <tr>
-    <td>key</td><td><code>string</code></td><td><p>The possible values are: <code>&#39;query&#39;</code>, <code>&#39;projection&#39;</code> or <code>&#39;values&#39;</code>.</p>
-</td>
-    </tr><tr>
     <td>value</td><td><code>Object</code></td><td><p>The value to extend it with.</p>
 </td>
     </tr>  </tbody>
@@ -158,7 +152,47 @@ of built-in static methods.
 
 ### extension.extendQuery(value) ⇒ <code>this</code>
 Extend the default query.
-(The first parameter of find, findOne and count.)
+(Model.defaults().query)
+
+**Kind**: instance method of [<code>Extension</code>](#Extension)  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>value</td><td><code>Object</code></td><td><p>The value to extend it with.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+<a name="Extension+extendProjection"></a>
+
+### extension.extendProjection(value) ⇒ <code>this</code>
+Extend the default projection.
+(Model.defaults().projection)
+
+**Kind**: instance method of [<code>Extension</code>](#Extension)  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>value</td><td><code>Object</code></td><td><p>The value to extend it with.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+<a name="Extension+extendValues"></a>
+
+### extension.extendValues(value) ⇒ <code>this</code>
+Extend the default values.
+(Model.defaults().values)
 
 **Kind**: instance method of [<code>Extension</code>](#Extension)  
 <table>
@@ -190,6 +224,7 @@ Extend the default query.
         * [.duplicate()](#Model+duplicate) ⇒ <code>Promise.&lt;static&gt;</code>
     * _static_
         * [.datastore()](#Model.datastore) ⇒ <code>null</code> \| <code>string</code> \| <code>Object</code>
+        * [.defaults()](#Model.defaults) ⇒ <code>Object</code>
         * [.find(query, projection)](#Model.find) ⇒ <code>Cursor</code>
         * [.findOne(query, projection)](#Model.findOne) ⇒ <code>Promise.&lt;static&gt;</code>
         * [.count(query)](#Model.count) ⇒ <code>Promise.&lt;number&gt;</code>
@@ -258,12 +293,34 @@ Create a duplicate of the model (in database).
 <a name="Model.datastore"></a>
 
 ### Model.datastore() ⇒ <code>null</code> \| <code>string</code> \| <code>Object</code>
-Get the models datastore configuration.
+Get the datastore configuration of the model.
 For more information visit:
 https://github.com/louischatriot/nedb#creatingloading-a-database
 
 **Kind**: static method of [<code>Model</code>](#Model)  
 **Returns**: <code>null</code> \| <code>string</code> \| <code>Object</code> - The datastore configuration.  
+<a name="Model.defaults"></a>
+
+### Model.defaults() ⇒ <code>Object</code>
+Get the defaults of the model.
+
+**Note**:
+
+The returned object **has** to contain at least
+three objects:
+- `query` - used in `Model.find`, `Model.findOne` and `Model.count`
+- `projection` - used in `Model.find` and `Model.findOne`
+- `values` - used in `Model.insert`
+
+It's good practice to **not** return a
+completely new value, but return an
+extended one based on the parent's defaults.
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+**Example**  
+```js
+return extend(true, super.defaults(), { ... })
+```
 <a name="Model.find"></a>
 
 ### Model.find(query, projection) ⇒ <code>Cursor</code>

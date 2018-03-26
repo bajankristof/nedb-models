@@ -90,35 +90,55 @@ class Extension {
     }
 
     /**
-     * Extend the default arguments
-     * of built-in static methods.
-     *
-     * **Keys**:
-     * - `'query'` - used in `Model.find`, `Model.findOne` and `Model.count`
-     * - `'projection'` - used in `Model.find` and `Model.findOne`
-     * - `'values'` - used in `Model.insert`
+     * Extend the value returned by the `defaults`
+     * static method of the model.
      * 
-     * @param  {string} key The possible values are: `'query'`, `'projection'` or `'values'`.
      * @param  {Object} value The value to extend it with.
      * @return {this}
      */
-    extendDefaults(key, value) {
-        this.__class.__defaults[key] = augmenter(
-            this.__class.__defaults[key]
-        )(value)
+    extendDefaults(value) {
+        this.setStatic('defaults', defaults => {
+            return function () {
+                return augmenter(
+                    defaults.call(__class)
+                )(value)
+            }
+        }, true)
 
         return this
     }
 
     /**
      * Extend the default query.
-     * (The first parameter of find, findOne and count.)
+     * (Model.defaults().query)
      * 
      * @param  {Object} value The value to extend it with.
      * @return {this}
      */
     extendQuery(value) {
-        return this.extendDefaults('query', value)
+        return this.extendDefaults({ query: value })
+    }
+
+    /**
+     * Extend the default projection.
+     * (Model.defaults().projection)
+     * 
+     * @param  {Object} value The value to extend it with.
+     * @return {this}
+     */
+    extendProjection(value) {
+        return this.extendDefaults({ projection: value })
+    }
+
+    /**
+     * Extend the default values.
+     * (Model.defaults().values)
+     * 
+     * @param  {Object} value The value to extend it with.
+     * @return {this}
+     */
+    extendValues(value) {
+        return this.extendDefaults({ values: value })
     }
 }
 
