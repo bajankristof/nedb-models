@@ -2,6 +2,15 @@ const
     augmenter = require('../helpers/augmenter'),
     Extension = require('../Extension')
 
+/**
+ * @summary
+ * Use this extension to add `createdAt` and `removedAt`
+ * timestamps to your models automatically.
+ *
+ * This extension sets up:
+ * - `createdAt` and `updatedAt` timestamps on insert
+ * - updates `updatedAt` automatically on update
+ */
 class Timestamps extends Extension {
     apply() {
         let __class = this.__class
@@ -29,6 +38,8 @@ class Timestamps extends Extension {
                 )
             }
         }, true)
+
+        return true
     }
 }
 

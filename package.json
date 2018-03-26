@@ -4,6 +4,7 @@
   "description": "A simple and useful model wrapper for nedb (using nedb-promises).",
   "main": "index.js",
   "scripts": {
+    "docs": "jsdoc2md ./src/*.js ./src/extensions/*.js > docs.md --no-gfm",
     "test": "mocha --reporter spec --timeout 10000"
   },
   "repository": {
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.0",
+    "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^3.4.2"
   }
 }

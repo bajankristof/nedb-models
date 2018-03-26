@@ -5,7 +5,7 @@ const
     Extension = require('./Extension')
 
 /**
- * @name Model
+ * @class
  */
 class Model {
     constructor(values) {
@@ -15,7 +15,7 @@ class Model {
     /**
      * Assign values to the model.
      * 
-     * @param  {Object} values
+     * @param  {Object} values Key-value pairs to be assigned.
      * @return {undefined}
      */
     assign(values) {
@@ -79,6 +79,7 @@ class Model {
      * Save the model to the database.
      * 
      * @return {Promise.<this>}
+     * @async
      */
     async save() {
         var
@@ -105,6 +106,7 @@ class Model {
      * Remove the model from the database.
      * 
      * @return {Promise.<number>}
+     * @async
      */
     async remove() {
         if ( ! this._id) return 0
@@ -118,6 +120,7 @@ class Model {
      * Create a duplicate of the model (in database).
      * 
      * @return {Promise.<static>} The duplicate...
+     * @async
      */
     async duplicate() {
         let values = this.toPOJO()
@@ -127,10 +130,22 @@ class Model {
 
     /**
      * Find models that match a query.
+     * https://github.com/louischatriot/nedb#finding-documents
      *
-     * @param {Object} query
+     * **Note**: This is the only method of the Model class
+     * that is not an `async function`.
+     * That is because of the way the Cursor works.
+     * The cool thing about Cursors is that you can `await` their results.
+     *
+     * @example
+     * return await Model.find({ ... }).sort({ ... })
+     * @example
+     * // to get all models
+     * return await Model.find()
+     *
+     * @param {Object} query 
      * @param {Object} projection
-     * @return {Cursor}
+     * @return {Cursor} https://github.com/bajankristof/nedb-promises#find-query--projection--
      * @static
      */
     static find(query = {}, projection) {
@@ -151,11 +166,13 @@ class Model {
 
     /**
      * Find one model that matches a query.
+     * https://github.com/louischatriot/nedb#finding-documents
      *
      * @param {Object} query
      * @param {Object} projection
      * @return {Promise.<static>}
      * @static
+     * @async
      */
     static async findOne(query = {}, projection) {
         query = augmenter(this.__defaults.query)(query)
@@ -168,10 +185,12 @@ class Model {
 
     /**
      * Count models that match a query.
+     * https://github.com/louischatriot/nedb#counting-documents
      *
      * @param {Object} query
      * @return {Promise.<number>}
      * @static
+     * @async
      */
     static async count(query = {}) {
         query = augmenter(this.__defaults.query)(query)
@@ -183,10 +202,12 @@ class Model {
 
     /**
      * Insert a document or bulk insert documents.
+     * https://github.com/louischatriot/nedb#inserting-documents
      *
-     * @param {Object|Array} values
-     * @return {Promise.<static|Array.<static>>}
+     * @param {Object|Object[]} values
+     * @return {Promise.<static|static[]>}
      * @static
+     * @async
      */
     static async insert(values) {
         let augment = augmenter(this.__defaults.values)
@@ -202,12 +223,14 @@ class Model {
 
     /**
      * Update models that match a query.
+     * https://github.com/louischatriot/nedb#updating-documents
      *
      * @param {Object} query
      * @param {Object} values
      * @param {Object} options
      * @return {Promise.<*>}
      * @static
+     * @async
      */
     static async update(query = {}, values, options) {
         options = augmenter({ multi: true })(options)
@@ -219,11 +242,13 @@ class Model {
 
     /**
      * Remove models that match a query.
+     * https://github.com/louischatriot/nedb#removing-documents
      *
      * @param {Object} query
      * @param {Object} options
      * @return {Promise.<number>}
      * @static
+     * @async
      */
     static async remove(query = {}, options) {
         options = augmenter({ multi: true })(options)
@@ -235,10 +260,12 @@ class Model {
 
     /**
      * Create a model and save it to the database.
+     * (An alias to insert...)
      * 
-     * @param  {Object|Array.<Object>} values
-     * @return {Promise.<static|Array.<static>>}
+     * @param  {Object|Object[]} values
+     * @return {Promise.<static|static[]>}
      * @static
+     * @async
      */
     static async create(values) {
         return await this.insert(values)
@@ -247,8 +274,8 @@ class Model {
     /**
      * Use an extension on the model.
      * 
-     * @param  {Function|Array.<Function>} extension
-     * @return {boolean}
+     * @param  {Function|Function[]} extension Extension constructor(s).
+     * @return {boolean} true if all extensions were applied successfully.
      * @static
      */
     static use(extension) {
@@ -268,9 +295,7 @@ class Model {
             return false
         }
 
-        extension.apply()
-
-        return true
+        return extension.apply()
     }
 }
 

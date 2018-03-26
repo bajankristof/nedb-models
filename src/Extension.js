@@ -2,7 +2,7 @@ const
     augmenter = require('./helpers/augmenter')
 
 /**
- * @name Extension
+ * @class
  */
 class Extension {
     constructor(__class) {
@@ -11,18 +11,18 @@ class Extension {
 
     /**
      * This is called when the extension
-     * applies.
+     * is beind applied.
      * 
-     * @return {undefined}
+     * @return {boolean}
      */
-    apply() {}
+    apply() { return true }
 
     /**
      * Set a non-static property or method.
      * 
-     * @param {string}     key
-     * @param {*|Function} value
-     * @param {boolean}    fn
+     * @param {string}      key The name of the property or method.
+     * @param {*|Function}  value The value to replace it with or a replacer function.
+     * @param {boolean}     fn Whether to use the value as a replacer or not.
      * @return {this}
      */
     set(key, value, fn) {
@@ -41,8 +41,8 @@ class Extension {
     /**
      * Extend a non-static property.
      * 
-     * @param  {string} key
-     * @param  {*}      value
+     * @param  {string} key The name of the property.
+     * @param  {Object} value The value to extend it with.
      * @return {this}
      */
     extend(key, value) {
@@ -56,9 +56,9 @@ class Extension {
     /**
      * Set a static property or method.
      * 
-     * @param {string}     key
-     * @param {*|Function} value
-     * @param {boolean}    fn
+     * @param {string}      key The name of the static property or method.
+     * @param {*|Function}  value The value to replace it with or a replacer function.
+     * @param {boolean}     fn Whether to use the value as a replacer or not.
      * @return {this}
      */
     setStatic(key, value, fn) {
@@ -77,8 +77,8 @@ class Extension {
     /**
      * Extend a static property.
      * 
-     * @param  {string} key
-     * @param  {*}      value
+     * @param  {string} key The name of the static property.
+     * @param  {Object} value The value to extend it with.
      * @return {this}
      */
     extendStatic(key, value) {
@@ -91,11 +91,15 @@ class Extension {
 
     /**
      * Extend the default arguments
-     * of a built-in static method.
-     * Eg.: find, findOne, count, etc.
+     * of built-in static methods.
+     *
+     * **Keys**:
+     * `'query'` - used in `Model.find`, `Model.findOne` and `Model.count`
+     * `'projection'` - used in `Model.find` and `Model.findOne`
+     * `'values'` - used in `Model.insert`
      * 
-     * @param  {string} method
-     * @param  {Array}  value
+     * @param  {string} key The possible values are: `'query'`, `'projection'` or `'values'`.
+     * @param  {Object} value The value to extend it with.
      * @return {this}
      */
     extendDefaults(key, value) {
@@ -110,7 +114,7 @@ class Extension {
      * Extend the default query.
      * (The first parameter of find, findOne and count.)
      * 
-     * @param  {Object} value
+     * @param  {Object} value The value to extend it with.
      * @return {this}
      */
     extendQuery(value) {
