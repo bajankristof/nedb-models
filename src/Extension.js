@@ -94,9 +94,9 @@ class Extension {
      * of built-in static methods.
      *
      * **Keys**:
-     * `'query'` - used in `Model.find`, `Model.findOne` and `Model.count`
-     * `'projection'` - used in `Model.find` and `Model.findOne`
-     * `'values'` - used in `Model.insert`
+     * - `'query'` - used in `Model.find`, `Model.findOne` and `Model.count`
+     * - `'projection'` - used in `Model.find` and `Model.findOne`
+     * - `'values'` - used in `Model.insert`
      * 
      * @param  {string} key The possible values are: `'query'`, `'projection'` or `'values'`.
      * @param  {Object} value The value to extend it with.

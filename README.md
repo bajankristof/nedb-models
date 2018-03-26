@@ -1,5 +1,5 @@
 # nedb-models
-nedb-models is a simple and extensible model wrapper for [nedb](https://www.npmjs.com/package/nedb) using [nedb-promises](https://www.npmjs.com/package/nedb-promises).
+`nedb-models` is a simple and extensible model wrapper for [nedb](https://www.npmjs.com/package/nedb) using [nedb-promises](https://www.npmjs.com/package/nedb-promises).
 
 Check out the [docs](https://github.com/bajankristof/nedb-models/blob/master/docs.md)!
 
@@ -15,18 +15,18 @@ const { Model } = require('nedb-models')
 
 class Book extends Model {
 	static datastore() {
-    	return {
-        	filename: 'books.db'
-        }
+  	return {
+    	filename: 'books.db'
+    }
         
-        // same as
-        // return 'books.db'
-    }
+    // same as
+    // return 'books.db'
+  }
     
-    async sell() {
-    	this.soldAt = Date.now()
-        return await this.save()
-    }
+  async sell() {
+    this.soldAt = Date.now()
+    return await this.save()
+  }
 }
 
 Book.find()
