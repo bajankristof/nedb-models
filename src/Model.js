@@ -14,6 +14,12 @@ class Model {
 
     /**
      * Assign values to the model.
+     *
+     * @example
+     * let book = await Book.findOne()
+     * // Book { _id: 'XXX', title: '...' }
+     * book.assign({ title: ',,,', one: 1 })
+     * // now book is Book { _id: 'XXX', title: ',,,', one: 1 }
      * 
      * @param  {Object} values Key-value pairs to be assigned.
      * @return {undefined}
@@ -33,6 +39,12 @@ class Model {
      * Get the datastore configuration of the model.
      * For more information visit:
      * https://github.com/louischatriot/nedb#creatingloading-a-database
+     *
+     * @example
+     * return {
+     *     inMemoryOnly: true,
+     *     timestampData: true
+     * }
      * 
      * @return {null|string|Object} The datastore configuration.
      * @static
@@ -105,6 +117,13 @@ class Model {
 
     /**
      * Save the model to the database.
+     *
+     * @example
+     * let book = new Book()
+     * book.title = '...'
+     * // now book is Book { title: '...' }
+     * await book.save()
+     * // now book is Book { _id: 'XXX', title: '...'}
      * 
      * @return {Promise.<this>}
      * @async
@@ -132,6 +151,11 @@ class Model {
 
     /**
      * Remove the model from the database.
+     *
+     * @example
+     * let book = await Book.findOne()
+     * await book.remove()
+     * // now book is not persisted in the database
      * 
      * @return {Promise.<number>}
      * @async
@@ -146,6 +170,12 @@ class Model {
 
     /**
      * Create a duplicate of the model (in database).
+     *
+     * @example
+     * let book = await Book.findOne()
+     * // Book { _id: 'XXX', title: '...' }
+     * let duplicate = await book.duplicate()
+     * // Book { _id: 'YYY', title: '...' }
      * 
      * @return {Promise.<static>} The duplicate...
      * @async
@@ -166,10 +196,11 @@ class Model {
      * The cool thing about Cursors is that you can `await` their results.
      *
      * @example
-     * return await Model.find({ ... }).sort({ ... })
+     * return await Book.find({ ... }).sort({ ... })
+     * 
      * @example
-     * // to get all models
-     * return await Model.find()
+     * // to get all books
+     * return await Book.find()
      *
      * @param {Object} query 
      * @param {Object} projection
@@ -230,7 +261,16 @@ class Model {
 
     /**
      * Insert a document or bulk insert documents.
+     * Returns the inserted documents in model format.
      * https://github.com/louischatriot/nedb#inserting-documents
+     *
+     * @example
+     * await Book.insert({ title: '...' })
+     * // Book { _id: 'XXX', title: '...' }
+     *
+     * @example
+     * await Book.insert([ { title: '...' }, { title: ',,,' } ])
+     * // [ Book { _id: 'XXX', title: '...' }, Book { _id: 'YYY', title: ',,,' } ]
      *
      * @param {Object|Object[]} values
      * @return {Promise.<static|static[]>}
@@ -252,6 +292,14 @@ class Model {
     /**
      * Update models that match a query.
      * https://github.com/louischatriot/nedb#updating-documents
+     * By default it returns the number of updated documents.
+     * 
+     * You can set options.returnUpdatedDocs to true to get the updated
+     * documents as models.
+     *
+     * @example
+     * await Book.update({ ... }, { $set: { ... } })
+     * // 1
      *
      * @param {Object} query
      * @param {Object} values
@@ -271,6 +319,12 @@ class Model {
     /**
      * Remove models that match a query.
      * https://github.com/louischatriot/nedb#removing-documents
+     * By default removing multiple documents is enabled.
+     * Set options.multi to false to disable it.
+     *
+     * @example
+     * await Book.remove({ ... })
+     * // 5
      *
      * @param {Object} query
      * @param {Object} options
@@ -301,6 +355,9 @@ class Model {
 
     /**
      * Use an extension on the model.
+     *
+     * @example
+     * Book.use(SoftRemoves)
      * 
      * @param  {Function|Function[]} extension Extension constructor(s).
      * @return {boolean} true if all extensions were applied successfully.

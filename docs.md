@@ -45,6 +45,12 @@ This is called when the extension
 is beind applied.
 
 **Kind**: instance method of [<code>Extension</code>](#Extension)  
+**Example**  
+```js
+// check out the Timestamps or SoftRemoves extension...
+// https://github.com/bajankristof/nedb-models/blob/master/src/extensions/Timestamps.js
+// https://github.com/bajankristof/nedb-models/blob/master/src/extensions/SoftRemoves.js
+```
 <a name="Extension+set"></a>
 
 ### extension.set(key, value, fn) ⇒ <code>this</code>
@@ -70,6 +76,28 @@ Set a non-static property or method.
     </tr>  </tbody>
 </table>
 
+**Example**  
+```js
+// in apply() { ... }
+this.set('one', 1)
+// now the applied model has an instance property 'one' with a value of 1
+```
+**Example**  
+```js
+// in apply() { ... }
+this.set('one', function () { return 1 })
+// now the applied model has an instance method 'one' with a return value of 1
+```
+**Example**  
+```js
+// in apply() { ... } if you want to override an instance method
+this.set('save', save => {
+    return function () {
+        console.log('we disabled saving')
+        return this // the model instance
+    }
+})
+```
 <a name="Extension+extend"></a>
 
 ### extension.extend(key, value) ⇒ <code>this</code>
@@ -96,6 +124,7 @@ Extend a non-static property.
 
 ### extension.setStatic(key, value, fn) ⇒ <code>this</code>
 Set a static property or method.
+(Works the same way *extension.set* does...)
 
 **Kind**: instance method of [<code>Extension</code>](#Extension)  
 <table>
@@ -117,6 +146,18 @@ Set a static property or method.
     </tr>  </tbody>
 </table>
 
+**Example**  
+```js
+// in apply() { ... } if you want to override a static method
+// first we need to reference the currently processed class
+let __class = this.__class
+this.setStatic('find', find => {
+    return function (query) {
+        console.log('we disabled the projection parameter')
+        return find.call(__class, query)
+    }
+})
+```
 <a name="Extension+extendStatic"></a>
 
 ### extension.extendStatic(key, value) ⇒ <code>this</code>
@@ -159,6 +200,13 @@ static method of the model.
     </tr>  </tbody>
 </table>
 
+**Example**  
+```js
+// in apply() { ... }
+this.extendDefaults({ query: { removedAt: null }})
+// now the applied model class' static defaults() return value is 
+// extended with the above object
+```
 <a name="Extension+extendQuery"></a>
 
 ### extension.extendQuery(value) ⇒ <code>this</code>
@@ -264,6 +312,13 @@ Assign values to the model.
     </tr>  </tbody>
 </table>
 
+**Example**  
+```js
+let book = await Book.findOne()
+// Book { _id: 'XXX', title: '...' }
+book.assign({ title: ',,,', one: 1 })
+// now book is Book { _id: 'XXX', title: ',,,', one: 1 }
+```
 <a name="Model+getClass"></a>
 
 ### model.getClass() ⇒ <code>function</code>
@@ -288,12 +343,26 @@ Get a JSON string representation of the model.
 Save the model to the database.
 
 **Kind**: instance method of [<code>Model</code>](#Model)  
+**Example**  
+```js
+let book = new Book()
+book.title = '...'
+// now book is Book { title: '...' }
+await book.save()
+// now book is Book { _id: 'XXX', title: '...'}
+```
 <a name="Model+remove"></a>
 
 ### model.remove() ⇒ <code>Promise.&lt;number&gt;</code>
 Remove the model from the database.
 
 **Kind**: instance method of [<code>Model</code>](#Model)  
+**Example**  
+```js
+let book = await Book.findOne()
+await book.remove()
+// now book is not persisted in the database
+```
 <a name="Model+duplicate"></a>
 
 ### model.duplicate() ⇒ <code>Promise.&lt;static&gt;</code>
@@ -301,6 +370,13 @@ Create a duplicate of the model (in database).
 
 **Kind**: instance method of [<code>Model</code>](#Model)  
 **Returns**: <code>Promise.&lt;static&gt;</code> - The duplicate...  
+**Example**  
+```js
+let book = await Book.findOne()
+// Book { _id: 'XXX', title: '...' }
+let duplicate = await book.duplicate()
+// Book { _id: 'YYY', title: '...' }
+```
 <a name="Model.datastore"></a>
 
 ### Model.datastore() ⇒ <code>null</code> \| <code>string</code> \| <code>Object</code>
@@ -310,6 +386,13 @@ https://github.com/louischatriot/nedb#creatingloading-a-database
 
 **Kind**: static method of [<code>Model</code>](#Model)  
 **Returns**: <code>null</code> \| <code>string</code> \| <code>Object</code> - The datastore configuration.  
+**Example**  
+```js
+return {
+    inMemoryOnly: true,
+    timestampData: true
+}
+```
 <a name="Model.defaults"></a>
 
 ### Model.defaults() ⇒ <code>Object</code>
@@ -361,12 +444,12 @@ The cool thing about Cursors is that you can `await` their results.
 
 **Example**  
 ```js
-return await Model.find({ ... }).sort({ ... })
+return await Book.find({ ... }).sort({ ... })
 ```
 **Example**  
 ```js
-// to get all models
-return await Model.find()
+// to get all books
+return await Book.find()
 ```
 <a name="Model.findOne"></a>
 
@@ -412,6 +495,7 @@ https://github.com/louischatriot/nedb#counting-documents
 
 ### Model.insert(values) ⇒ <code>Promise.&lt;(static\|Array.&lt;static&gt;)&gt;</code>
 Insert a document or bulk insert documents.
+Returns the inserted documents in model format.
 https://github.com/louischatriot/nedb#inserting-documents
 
 **Kind**: static method of [<code>Model</code>](#Model)  
@@ -427,11 +511,25 @@ https://github.com/louischatriot/nedb#inserting-documents
     </tr>  </tbody>
 </table>
 
+**Example**  
+```js
+await Book.insert({ title: '...' })
+// Book { _id: 'XXX', title: '...' }
+```
+**Example**  
+```js
+await Book.insert([ { title: '...' }, { title: ',,,' } ])
+// [ Book { _id: 'XXX', title: '...' }, Book { _id: 'YYY', title: ',,,' } ]
+```
 <a name="Model.update"></a>
 
 ### Model.update(query, values, options) ⇒ <code>Promise.&lt;\*&gt;</code>
 Update models that match a query.
 https://github.com/louischatriot/nedb#updating-documents
+By default it returns the number of updated documents.
+
+You can set options.returnUpdatedDocs to true to get the updated
+documents as models.
 
 **Kind**: static method of [<code>Model</code>](#Model)  
 <table>
@@ -450,11 +548,18 @@ https://github.com/louischatriot/nedb#updating-documents
     </tr>  </tbody>
 </table>
 
+**Example**  
+```js
+await Book.update({ ... }, { $set: { ... } })
+// 1
+```
 <a name="Model.remove"></a>
 
 ### Model.remove(query, options) ⇒ <code>Promise.&lt;number&gt;</code>
 Remove models that match a query.
 https://github.com/louischatriot/nedb#removing-documents
+By default removing multiple documents is enabled.
+Set options.multi to false to disable it.
 
 **Kind**: static method of [<code>Model</code>](#Model)  
 <table>
@@ -471,6 +576,11 @@ https://github.com/louischatriot/nedb#removing-documents
     </tr>  </tbody>
 </table>
 
+**Example**  
+```js
+await Book.remove({ ... })
+// 5
+```
 <a name="Model.create"></a>
 
 ### Model.create(values) ⇒ <code>Promise.&lt;(static\|Array.&lt;static&gt;)&gt;</code>
@@ -510,6 +620,10 @@ Use an extension on the model.
     </tr>  </tbody>
 </table>
 
+**Example**  
+```js
+Book.use(SoftRemoves)
+```
 <a name="SoftRemoves"></a>
 
 ## SoftRemoves
