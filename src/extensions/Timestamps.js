@@ -20,7 +20,7 @@ class Timestamps extends Extension {
 
         this.setStatic('datastore', datastore => {
             return function () {
-                let options = datastore(),
+                let options = datastore()
 
                 if ( ! options) {
                     options = { timestampData: true }

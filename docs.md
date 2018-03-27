@@ -650,7 +650,10 @@ timestamps to your models automatically.
 
 This extension sets up:
 - `createdAt` and `updatedAt` timestamps on insert
-- updates `updatedAt` automatically on update  
+- updates `updatedAt` automatically on update
+
+It uses nedb's timestampData option to achieve this.
+To learn more visit: https://github.com/louischatriot/nedb#creatingloading-a-database  
 <a name="augmenter"></a>
 
 ## augmenter(defaults) ⇒ <code>function</code>
