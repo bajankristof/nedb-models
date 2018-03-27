@@ -73,7 +73,7 @@ class SoftRemoves extends Extension {
             })
 
             return async function (query = {}, options) {
-                let values = { $set: { removedAt: Date.now() } }
+                let values = { $set: { removedAt: new Date() } }
                 return await __class.update(query, values, options)
             }
         }, true)
