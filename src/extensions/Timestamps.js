@@ -10,32 +10,32 @@ const
  * This extension sets up:
  * - `createdAt` and `updatedAt` timestamps on insert
  * - updates `updatedAt` automatically on update
+ *
+ * It uses nedb's timestampData option to achieve this.
+ * To learn more visit: https://github.com/louischatriot/nedb#creatingloading-a-database
  */
 class Timestamps extends Extension {
     apply() {
         let __class = this.__class
 
-        this.setStatic('insert', insert => {
-            return async function (values) {
-                let createdAt = Date.now(),
-                    updatedAt = createdAt
+        this.setStatic('datastore', datastore => {
+            return function () {
+                let options = datastore(),
 
-                values = Array.isArray(values)
-                    ? values.map(current => augmenter(current)({ createdAt, updatedAt }))
-                    : augmenter(values)({ createdAt, updatedAt })
+                if ( ! options) {
+                    options = { timestampData: true }
+                } else if ('string' === typeof options) {
+                    options = {
+                        filename: options,
+                        timestampData: true
+                    }
+                } else if ('object' === typeof options) {
+                    options = augmenter(options)({
+                        timestampData: true
+                    })
+                }
 
-                return await insert.call(__class, values)
-            }
-        }, true)
-
-        this.setStatic('update', update => {
-            return async function (query = {}, values, options) {
-                return await update.call(
-                    __class,
-                    query,
-                    augmenter(values)({ $set: { updatedAt: Date.now() } }),
-                    options
-                )
+                return options
             }
         }, true)
 
