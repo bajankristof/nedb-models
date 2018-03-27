@@ -11,6 +11,17 @@
 <dd></dd>
 </dl>
 
+## Functions
+
+<dl>
+<dt><a href="#augmenter">augmenter(defaults)</a> ⇒ <code>function</code></dt>
+<dd></dd>
+<dt><a href="#converter">converter(__class)</a> ⇒ <code>function</code></dt>
+<dd></dd>
+<dt><a href="#datastore">datastore(__class)</a> ⇒ <code>Proxy.&lt;Datastore&gt;</code></dt>
+<dd></dd>
+</dl>
+
 <a name="Extension"></a>
 
 ## Extension
@@ -312,8 +323,8 @@ three objects:
 - `projection` - used in `Model.find` and `Model.findOne`
 - `values` - used in `Model.insert`
 
-It's good practice to **not** return a
-completely new value, but return an
+It's good practice **not** to return a
+completely new value, but to return an
 extended one based on the parent's defaults.
 
 **Kind**: static method of [<code>Model</code>](#Model)  
@@ -526,3 +537,85 @@ timestamps to your models automatically.
 This extension sets up:
 - `createdAt` and `updatedAt` timestamps on insert
 - updates `updatedAt` automatically on update  
+<a name="augmenter"></a>
+
+## augmenter(defaults) ⇒ <code>function</code>
+**Kind**: global function  
+**Summary**: Get a safe object extender from a default object.
+(Why is it safe?
+Because it clones both the defaults and the given object,
+so it doesn't modify them.)  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>defaults</td><td><code>Object</code></td><td><p>The defaults to extend.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+augmenter({ one: true })({ two: false })
+// { one: true, two: false }
+```
+**Example**  
+```js
+augmenter({ one: true })({ one: false, two: false })
+// { one: false, two: false }
+```
+<a name="converter"></a>
+
+## converter(__class) ⇒ <code>function</code>
+**Kind**: global function  
+**Summary**: Get a converter from a model class.  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>__class</td><td><code>function</code></td><td><p>The model class.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+converter(Book)({ title: '...' })
+// Book { title: '...' }
+```
+**Example**  
+```js
+converter(Book)([ { title: '...' }, { title: ',,,' } ])
+// [ Book { title: '...' }, Book { title: ',,,' } ]
+```
+<a name="datastore"></a>
+
+## datastore(__class) ⇒ <code>Proxy.&lt;Datastore&gt;</code>
+**Kind**: global function  
+**Summary**: Get a datastore instance from a model class.  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>__class</td><td><code>function</code></td><td><p>The model class.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+datastore(Book)()
+// Proxy.<Datastore> based on Book.datastore()
+```

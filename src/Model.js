@@ -52,8 +52,8 @@ class Model {
      * - `projection` - used in `Model.find` and `Model.findOne`
      * - `values` - used in `Model.insert`
      *
-     * It's good practice to **not** return a
-     * completely new value, but return an
+     * It's good practice **not** to return a
+     * completely new value, but to return an
      * extended one based on the parent's defaults.
      *
      * @example
