@@ -1,4 +1,5 @@
-# nedb-models
+![nedb-models](https://github.com/bajankristof/nedb-models/blob/master/logo.svg "nedb-models")
+
 `nedb-models` is a simple and extensible model wrapper for [nedb](https://www.npmjs.com/package/nedb) using [nedb-promises](https://www.npmjs.com/package/nedb-promises).
 
 Check out the [docs](https://github.com/bajankristof/nedb-models/blob/master/docs.md)!
