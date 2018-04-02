@@ -25,10 +25,11 @@
   "dependencies": {
     "clone": "^1.0.4",
     "extend": "^3.0.1",
-    "nedb-promises": "^1.1.4"
+    "nedb-promises": "^1.2.0"
   },
   "devDependencies": {
     "chai": "^4.1.0",
+    "faker": "^4.1.0",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^3.4.2"
   }
