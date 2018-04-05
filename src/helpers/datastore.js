@@ -4,7 +4,7 @@ const
         const
             preserve = function (datastore) {
                 Object.defineProperty(__class, '__datastore', {
-                    configurable: false,
+                    configurable: true,
                     enumerable: false,
                     writable: false,
                     value: datastore
