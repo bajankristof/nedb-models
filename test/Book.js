@@ -1,6 +1,4 @@
 const
-    fs = require('fs'),
-    path = require('path'),
     faker = require('faker'),
     { Model, augmenter } = require('..')
 
@@ -39,12 +37,6 @@ class Book extends Model {
         }
 
         return data
-    }
-
-    static flush() {
-        if (fs.existsSync(this.datastore())) {
-            fs.unlinkSync(this.datastore())
-        }
     }
 }
 
