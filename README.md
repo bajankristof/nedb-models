@@ -4,13 +4,30 @@
 
 Check out the [docs](https://github.com/bajankristof/nedb-models/blob/master/docs.md)!
 
+## Contents
+- [Installation](#installation)
+- [Usage](#usage)
+    - [Basics](#basics)
+    - [Extensions](#extensions)
+- [Creating extensions](#creating-extensions)
+- [What is coming](#what-is-coming)
+
+<a name="installation"></a>
 ## Installation
 ```bash
 npm install nedb-models
 ```
 
+<a name="usage"></a>
 ## Usage
+<a name="basics"></a>
 ### Basics
+A model class has almost all methods nedb's Datastore
+does, like `Model.find()`, `Model.findOne`, etc.
+
+Check out the [docs](https://github.com/bajankristof/nedb-models/blob/master/docs.md)
+to see all of them!
+
 ```js
 const { Model } = require('nedb-models')
 
@@ -43,14 +60,16 @@ book.sell().then(book => {
 })
 ```
 
+<a name="extensions"></a>
 ### Extensions
-`nedb-models` includes two extensions that you can use right out of the box:
+`nedb-models` includes three extensions that you can use right out of the box:
 - [Timestamps](https://github.com/bajankristof/nedb-models/blob/master/docs.md#Timestamps)
 - [SoftRemoves](https://github.com/bajankristof/nedb-models/blob/master/docs.md#SoftRemoves)
+- [Encryption](https://github.com/bajankristof/nedb-models/blob/master/docs.md#Encryption)
 
 To implement them in your model, all you have to do is:
 ```js
-const { Model, Timestamps, SoftDeletes } = require('nedb-models')
+const { Model, Timestamps, SoftDeletes, Encryption } = require('nedb-models')
 
 class Book extends Model {
 	...
@@ -59,6 +78,7 @@ class Book extends Model {
 Book.use(SoftDeletes)
 // or Book.use([Timestamps, SoftDeletes])
 // or Book.use(Timestamps)
+// or Book.use(Encryption)
 
 // now that your model is using SoftDeletes, 
 // you can do funky stuff like:
@@ -67,4 +87,72 @@ Book.forceRemove({ ... })
 Book.restore({ ... })
 ```
 
+<a name="creating-extensions"></a>
+## Creating extensions
+Let's take a look at how an extension is built:
+```js
+class Timestamps extends Extension {
+    apply() {
+        let __class = this.__class
+
+        /**
+         * In this case we have to add the `timestampData: true`
+         * property to the datastore options.
+         *
+         * Since the datastore options are returned by a static
+         * method we need to overwrite this method while
+         * accessing it.
+         * This is where tha last parameter of (in this case) `setStatic`
+         * comes in handy. If you set this to true, and the second parameter
+         * is a function, the module will pass the original value
+         * to your function and then override it with the returned value.
+         */
+        this.setStatic('datastore', datastore => {
+            /**
+             * Don't use arrow functions when overwriting methods (static or instance),
+             * because arrow functions don't handle the context (`this`) well.
+             */
+            return function () {
+                /**
+                 * In the new function first we retrieve the original options.
+                 * We do that inside the new function to keep the possibility
+                 * of dynamic properties.
+                 */
+                let options = datastore.call(__class)
+
+                /**
+                 * We add the property while also checking
+                 * the type of the original options.
+                 */
+                if ( ! options) {
+                    options = { timestampData: true }
+                } else if ('string' === typeof options) {
+                    options = {
+                        filename: options,
+                        timestampData: true
+                    }
+                } else if ('object' === typeof options) {
+                    options = augmenter(options)({
+                        timestampData: true
+                    })
+                }
+
+                return options
+            }
+        }, true)
+
+        /**
+         * Finally we return true to show that
+         * applying the extension was successful.
+         */
+        return true
+    }
+}
+```
+
 Check out the [docs](https://github.com/bajankristof/nedb-models/blob/master/docs.md)!
+
+<a name="what-is-coming"></a>
+## What is coming
+- [Indexing](https://github.com/louischatriot/nedb#indexing)
+- Tests (for SoftRemoves and Encryption)

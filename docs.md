@@ -5,6 +5,8 @@
 <dd></dd>
 <dt><a href="#Model">Model</a></dt>
 <dd></dd>
+<dt><a href="#Encryption">Encryption</a></dt>
+<dd></dd>
 <dt><a href="#SoftRemoves">SoftRemoves</a></dt>
 <dd></dd>
 <dt><a href="#Timestamps">Timestamps</a></dt>
@@ -19,6 +21,10 @@
 <dt><a href="#converter">converter(__class)</a> ⇒ <code>function</code></dt>
 <dd></dd>
 <dt><a href="#datastore">datastore(__class)</a> ⇒ <code>Proxy.&lt;Datastore&gt;</code></dt>
+<dd></dd>
+<dt><a href="#encrypter">encrypter(algorithm, password)</a> ⇒ <code>function</code></dt>
+<dd></dd>
+<dt><a href="#decrypter">decrypter(algorithm, password)</a> ⇒ <code>function</code></dt>
 <dd></dd>
 </dl>
 
@@ -624,6 +630,59 @@ Use an extension on the model.
 ```js
 Book.use(SoftRemoves)
 ```
+<a name="Encryption"></a>
+
+## Encryption
+**Kind**: global class  
+**Summary**: Use this extension to encrypt your
+model's database file.
+
+This extension requires your model class
+to have a static `encryption` method that should
+either return a `string` (in this case this will be 
+used as the password for the encryption and the 
+algorithm will be `aes256`) or an `object` (that 
+must have a `password` property, also in this 
+case you can specify the encryption algorithm
+by providing an `algorithm` property too).
+
+Be aware that if you already have a database
+that has been created before applying the Encryption
+extension you might get the below error:
+```
+Error: More than 10% of the data file is corrupt, 
+the wrong beforeDeserialization hook may be used. 
+Cautiously refusing to start NeDB to prevent dataloss.
+```
+
+**Example**
+```js
+const { Model, Encryption } = require('nedb-models')
+
+class User extends Model {
+    static encryption() {
+        return 'password'
+    }
+}
+
+User.use(Encryption)
+```
+
+**Example**
+```js
+const { Model, Encryption } = require('nedb-models')
+
+class User extends Model {
+    static encryption() {
+        return {
+            password: 'password',
+            algorithm: 'aes192'
+        }
+    }
+}
+
+User.use(Encryption)
+```  
 <a name="SoftRemoves"></a>
 
 ## SoftRemoves
@@ -735,4 +794,64 @@ converter(Book)([ { title: '...' }, { title: ',,,' } ])
 ```js
 datastore(Book)()
 // Proxy.<Datastore> based on Book.datastore()
+```
+<a name="encrypter"></a>
+
+## encrypter(algorithm, password) ⇒ <code>function</code>
+**Kind**: global function  
+**Summary**: Get a simple encrypt function.
+(crypto.createCipher)
+
+This helper is used by the `Encryption` extension.  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>algorithm</td><td><code>string</code></td><td><p>An OpenSSL algorithm (eg.: aes256).</p>
+</td>
+    </tr><tr>
+    <td>password</td><td><code>string</code></td><td><p>The password to encrypt the data with.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+const encrypt = encrypter('aes256', 'password')
+encrypt('hello')
+// 54f505e1106e9ffc22cd64705c3819d4
+```
+<a name="decrypter"></a>
+
+## decrypter(algorithm, password) ⇒ <code>function</code>
+**Kind**: global function  
+**Summary**: Get a simple decrypt function.
+(crypto.createDecipher)
+
+This helper is used by the `Encryption` extension.  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>algorithm</td><td><code>string</code></td><td><p>An OpenSSL algorithm (eg.: aes256).</p>
+</td>
+    </tr><tr>
+    <td>password</td><td><code>string</code></td><td><p>The password to decrypt the data with.</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+const decrypt = decrypter('aes256', 'password')
+decrypt('54f505e1106e9ffc22cd64705c3819d4')
+// hello
 ```
