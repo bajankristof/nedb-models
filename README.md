@@ -10,7 +10,8 @@ Check out the [docs](https://github.com/bajankristof/nedb-models/blob/master/doc
     - [Basics](#basics)
     - [Extensions](#extensions)
 - [Creating extensions](#creating-extensions)
-- [What is coming](#what-is-coming)
+- [What's new](#whats-new)
+- [What's coming](#whats-coming)
 
 <a name="installation"></a>
 ## Installation
@@ -152,7 +153,12 @@ class Timestamps extends Extension {
 
 Check out the [docs](https://github.com/bajankristof/nedb-models/blob/master/docs.md)!
 
-<a name="what-is-coming"></a>
-## What is coming
-- [Indexing](https://github.com/louischatriot/nedb#indexing)
+<a name="whats-new"></a>
+## What's new
+`2.2.0`
+- [Events](https://github.com/bajankristof/nedb-models/blob/master/docs.md#Model.addListener)
+- [Indexing](https://github.com/bajankristof/nedb-models/blob/master/docs.md#Model.ensureIndex)
+
+<a name="whats-coming"></a>
+## What's coming
 - Tests (for SoftRemoves and Encryption)
