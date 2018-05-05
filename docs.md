@@ -297,6 +297,8 @@ Extend the default values.
         * [.update(query, values, options)](#Model.update) ⇒ <code>Promise.&lt;\*&gt;</code>
         * [.remove(query, options)](#Model.remove) ⇒ <code>Promise.&lt;number&gt;</code>
         * [.create(values)](#Model.create) ⇒ <code>Promise.&lt;(static\|Array.&lt;static&gt;)&gt;</code>
+        * [.ensureIndex(fieldName, options)](#Model.ensureIndex) ⇒ <code>Promise.&lt;undefined&gt;</code>
+        * [.removeIndex(fieldName)](#Model.removeIndex) ⇒ <code>Promise.&lt;undefined&gt;</code>
         * [.use(extension)](#Model.use) ⇒ <code>boolean</code>
 
 <a name="Model+assign"></a>
@@ -603,6 +605,50 @@ Create a model and save it to the database.
   <tbody>
 <tr>
     <td>values</td><td><code>Object</code> | <code>Array.&lt;Object&gt;</code></td>
+    </tr>  </tbody>
+</table>
+
+<a name="Model.ensureIndex"></a>
+
+### Model.ensureIndex(fieldName, options) ⇒ <code>Promise.&lt;undefined&gt;</code>
+Creates an index for a given field name.
+https://github.com/louischatriot/nedb#indexing
+
+The only difference between the original method
+and this is that the `fieldName` argument is separated
+from the options object.
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>fieldName</td><td><code>string</code></td>
+    </tr><tr>
+    <td>options</td><td><code>Object</code></td>
+    </tr>  </tbody>
+</table>
+
+<a name="Model.removeIndex"></a>
+
+### Model.removeIndex(fieldName) ⇒ <code>Promise.&lt;undefined&gt;</code>
+Removes the index for a given field name.
+https://github.com/louischatriot/nedb#indexing
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>fieldName</td><td><code>string</code></td>
     </tr>  </tbody>
 </table>
 
