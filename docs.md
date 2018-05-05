@@ -300,6 +300,20 @@ Extend the default values.
         * [.ensureIndex(fieldName, options)](#Model.ensureIndex) ⇒ <code>Promise.&lt;undefined&gt;</code>
         * [.removeIndex(fieldName)](#Model.removeIndex) ⇒ <code>Promise.&lt;undefined&gt;</code>
         * [.use(extension)](#Model.use) ⇒ <code>boolean</code>
+        * [.addListener()](#Model.addListener)
+        * [.emit()](#Model.emit)
+        * [.eventNames()](#Model.eventNames)
+        * [.getMaxListeners()](#Model.getMaxListeners)
+        * [.listenerCount()](#Model.listenerCount)
+        * [.listeners()](#Model.listeners)
+        * [.on()](#Model.on)
+        * [.once()](#Model.once)
+        * [.prependListener()](#Model.prependListener)
+        * [.prependOnceListener()](#Model.prependOnceListener)
+        * [.removeAllListeners()](#Model.removeAllListeners)
+        * [.removeListener()](#Model.removeListener)
+        * [.setMaxListeners()](#Model.setMaxListeners)
+        * [.rawListeners()](#Model.rawListeners)
 
 <a name="Model+assign"></a>
 
@@ -676,6 +690,146 @@ Use an extension on the model.
 ```js
 Book.use(SoftRemoves)
 ```
+<a name="Model.addListener"></a>
+
+### Model.addListener()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<a name="Model.emit"></a>
+
+### Model.emit()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<a name="Model.eventNames"></a>
+
+### Model.eventNames()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<a name="Model.getMaxListeners"></a>
+
+### Model.getMaxListeners()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<a name="Model.listenerCount"></a>
+
+### Model.listenerCount()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<a name="Model.listeners"></a>
+
+### Model.listeners()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<a name="Model.on"></a>
+
+### Model.on()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<a name="Model.once"></a>
+
+### Model.once()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<a name="Model.prependListener"></a>
+
+### Model.prependListener()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<a name="Model.prependOnceListener"></a>
+
+### Model.prependOnceListener()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<a name="Model.removeAllListeners"></a>
+
+### Model.removeAllListeners()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<a name="Model.removeListener"></a>
+
+### Model.removeListener()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<a name="Model.setMaxListeners"></a>
+
+### Model.setMaxListeners()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
+<a name="Model.rawListeners"></a>
+
+### Model.rawListeners()
+Derived from EventEmitter...
+
+https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+
+https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+
+**Kind**: static method of [<code>Model</code>](#Model)  
 <a name="Encryption"></a>
 
 ## Encryption

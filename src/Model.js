@@ -411,6 +411,160 @@ class Model {
 
         return extension.apply()
     }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static addListener(eventName, listener) {
+        return datastore(this)().addListener(eventName, listener)
+    }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static emit(eventName, ...args) {
+        return datastore(this)().emit(eventName, ...args)
+    }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static eventNames() {
+        return datastore(this)().eventNames()
+    }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static getMaxListeners() {
+        return datastore(this)().getMaxListeners()
+    }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static listenerCount(eventName) {
+        return datastore(this)().listenerCount(eventName)
+    }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static listeners(eventName) {
+        return datastore(this)().listeners(eventName)
+    }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static on(eventName, listener) {
+        return datastore(this)().on(eventName, listener)
+    }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static once(eventName, listener) {
+        return datastore(this)().once(eventName, listener)
+    }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static prependListener(eventName, listener) {
+        return datastore(this)().prependListener(eventName, listener)
+    }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static prependOnceListener(eventName, listener) {
+        return datastore(this)().prependOnceListener(eventName, listener)
+    }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static removeAllListeners(eventName) {
+        return datastore(this)().removeAllListeners(eventName)
+    }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static removeListener(eventName) {
+        return datastore(this)().removeListener(eventName)
+    }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static setMaxListeners(n) {
+        return datastore(this)().setMaxListeners(n)
+    }
+
+    /**
+     * Derived from EventEmitter...
+     * 
+     * https://nodejs.org/api/events.html#events_emitter_emit_eventname_args
+     *
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
+     */
+    static rawListeners(eventName) {
+        return datastore(this)().rawListeners(eventName)
+    }
 }
 
 module.exports = Model
