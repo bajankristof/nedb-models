@@ -297,8 +297,8 @@ Extend the default values.
         * [.update(query, values, options)](#Model.update) ⇒ <code>Promise.&lt;\*&gt;</code>
         * [.remove(query, options)](#Model.remove) ⇒ <code>Promise.&lt;number&gt;</code>
         * [.create(values)](#Model.create) ⇒ <code>Promise.&lt;(static\|Array.&lt;static&gt;)&gt;</code>
-        * [.ensureIndex(fieldName, options)](#Model.ensureIndex) ⇒ <code>Promise.&lt;undefined&gt;</code>
-        * [.removeIndex(fieldName)](#Model.removeIndex) ⇒ <code>Promise.&lt;undefined&gt;</code>
+        * [.ensureIndex(options)](#Model.ensureIndex) ⇒ <code>Promise.&lt;undefined&gt;</code>
+        * [.removeIndex(field)](#Model.removeIndex) ⇒ <code>Promise.&lt;undefined&gt;</code>
         * [.use(extension)](#Model.use) ⇒ <code>boolean</code>
         * [.addListener()](#Model.addListener)
         * [.emit()](#Model.emit)
@@ -624,13 +624,9 @@ Create a model and save it to the database.
 
 <a name="Model.ensureIndex"></a>
 
-### Model.ensureIndex(fieldName, options) ⇒ <code>Promise.&lt;undefined&gt;</code>
+### Model.ensureIndex(options) ⇒ <code>Promise.&lt;undefined&gt;</code>
 Creates an index for a given field name.
 https://github.com/louischatriot/nedb#indexing
-
-The only difference between the original method
-and this is that the `fieldName` argument is separated
-from the options object.
 
 **Kind**: static method of [<code>Model</code>](#Model)  
 <table>
@@ -641,15 +637,13 @@ from the options object.
   </thead>
   <tbody>
 <tr>
-    <td>fieldName</td><td><code>string</code></td>
-    </tr><tr>
     <td>options</td><td><code>Object</code></td>
     </tr>  </tbody>
 </table>
 
 <a name="Model.removeIndex"></a>
 
-### Model.removeIndex(fieldName) ⇒ <code>Promise.&lt;undefined&gt;</code>
+### Model.removeIndex(field) ⇒ <code>Promise.&lt;undefined&gt;</code>
 Removes the index for a given field name.
 https://github.com/louischatriot/nedb#indexing
 
@@ -662,7 +656,7 @@ https://github.com/louischatriot/nedb#indexing
   </thead>
   <tbody>
 <tr>
-    <td>fieldName</td><td><code>string</code></td>
+    <td>field</td><td><code>string</code></td>
     </tr>  </tbody>
 </table>
 

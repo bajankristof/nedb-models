@@ -356,30 +356,23 @@ class Model {
     /**
      * Creates an index for a given field name.
      * https://github.com/louischatriot/nedb#indexing
-     *
-     * The only difference between the original method
-     * and this is that the `fieldName` argument is separated
-     * from the options object.
      * 
-     * @param  {string} fieldName
      * @param  {Object} options
      * @return {Promise.<undefined>}
      */
-    static async ensureIndex(fieldName, options = {}) {
-        return await datastore(this)().ensureIndex(
-            augmenter(options)({ fieldName })
-        )
+    static async ensureIndex(options) {
+        return await datastore(this)().ensureIndex(options)
     }
 
     /**
      * Removes the index for a given field name.
      * https://github.com/louischatriot/nedb#indexing
      * 
-     * @param  {string} fieldName
+     * @param  {string} field
      * @return {Promise.<undefined>}
      */
-    static async removeIndex(fieldName) {
-        return await datastore(this)().removeIndex(fieldName)
+    static async removeIndex(field) {
+        return await datastore(this)().removeIndex(field)
     }
 
     /**
