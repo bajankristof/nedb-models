@@ -533,8 +533,8 @@ class Model {
      *
      * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore
      */
-    static removeListener(eventName) {
-        return datastore(this)().removeListener(eventName)
+    static removeListener(eventName, listener) {
+        return datastore(this)().removeListener(eventName, listener)
     }
 
     /**

@@ -1,6 +1,6 @@
 {
   "name": "nedb-models",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "A simple and useful model wrapper for nedb (using nedb-promises).",
   "main": "index.js",
   "scripts": {
