@@ -45,8 +45,12 @@ class Model {
      *     inMemoryOnly: true,
      *     timestampData: true
      * }
+     *
+     * @example
+     * const Datastore = require('nedb-promises')
+     * return Datastore.create('filename.db')
      * 
-     * @return {null|string|Object} The datastore configuration.
+     * @return {null|string|Object|Datastore} The datastore configuration or a [nedb-promises](https://www.npmjs.com/package/nedb-promises) datastore instance.
      * @static
      */
     static datastore() {

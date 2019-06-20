@@ -288,7 +288,7 @@ Extend the default values.
         * [.remove()](#Model+remove) ⇒ <code>Promise.&lt;number&gt;</code>
         * [.duplicate()](#Model+duplicate) ⇒ <code>Promise.&lt;static&gt;</code>
     * _static_
-        * [.datastore()](#Model.datastore) ⇒ <code>null</code> \| <code>string</code> \| <code>Object</code>
+        * [.datastore()](#Model.datastore) ⇒ <code>null</code> \| <code>string</code> \| <code>Object</code> \| <code>Datastore</code>
         * [.defaults()](#Model.defaults) ⇒ <code>Object</code>
         * [.find(query, projection)](#Model.find) ⇒ <code>Cursor</code>
         * [.findOne(query, projection)](#Model.findOne) ⇒ <code>Promise.&lt;static&gt;</code>
@@ -401,19 +401,24 @@ let duplicate = await book.duplicate()
 ```
 <a name="Model.datastore"></a>
 
-### Model.datastore() ⇒ <code>null</code> \| <code>string</code> \| <code>Object</code>
+### Model.datastore() ⇒ <code>null</code> \| <code>string</code> \| <code>Object</code> \| <code>Datastore</code>
 Get the datastore configuration of the model.
 For more information visit:
 https://github.com/louischatriot/nedb#creatingloading-a-database
 
 **Kind**: static method of [<code>Model</code>](#Model)  
-**Returns**: <code>null</code> \| <code>string</code> \| <code>Object</code> - The datastore configuration.  
+**Returns**: <code>null</code> \| <code>string</code> \| <code>Object</code> \| <code>Datastore</code> - The datastore configuration or a [nedb-promises](https://www.npmjs.com/package/nedb-promises) datastore instance.  
 **Example**  
 ```js
 return {
     inMemoryOnly: true,
     timestampData: true
 }
+```
+**Example**  
+```js
+const Datastore = require('nedb-promises')
+return Datastore.create('filename.db')
 ```
 <a name="Model.defaults"></a>
 
