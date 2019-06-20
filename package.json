@@ -1,6 +1,6 @@
 {
   "name": "nedb-models",
-  "version": "2.2.6",
+  "version": "2.2.7",
   "description": "A simple and useful model wrapper for nedb (using nedb-promises).",
   "main": "index.js",
   "scripts": {
@@ -25,12 +25,12 @@
   "dependencies": {
     "clone": "^2.1.2",
     "extend": "^3.0.2",
-    "nedb-promises": "^3.0.2"
+    "nedb-promises": "^3.0.6"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "faker": "^4.1.0",
-    "jsdoc-to-markdown": "^4.0.1",
-    "mocha": "^5.2.0"
+    "jsdoc-to-markdown": "^5.0.0",
+    "mocha": "^6.1.4"
   }
 }
