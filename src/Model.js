@@ -208,7 +208,7 @@ class Model {
      *
      * @param {Object} query 
      * @param {Object} projection
-     * @return {Cursor} https://github.com/bajankristof/nedb-promises#find-query--projection--
+     * @return {Cursor} https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore+find
      * @static
      */
     static find(query = {}, projection) {
@@ -229,11 +229,11 @@ class Model {
 
     /**
      * Find one model that matches a query.
-     * https://github.com/louischatriot/nedb#finding-documents
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore+findOne
      *
      * @param {Object} query
      * @param {Object} projection
-     * @return {Promise.<static>}
+     * @return {Cursor}
      * @static
      * @async
      */
@@ -241,26 +241,40 @@ class Model {
         query = augmenter(this.defaults().query)(query)
         projection = augmenter(this.defaults().projection)(projection)
 
-        return converter(this)(
-            await datastore(this)().findOne(query, projection)
-        )
+        let cursor = datastore(this)().findOne(query, projection),
+            exec = cursor.exec
+
+        cursor.exec = async () => {
+            return converter(this)(
+                await exec.call(cursor)
+            )
+        }
+
+        return cursor
     }
 
     /**
      * Count models that match a query.
-     * https://github.com/louischatriot/nedb#counting-documents
+     * https://github.com/bajankristof/nedb-promises/blob/master/docs.md#Datastore+count
      *
      * @param {Object} query
-     * @return {Promise.<number>}
+     * @return {Cursor}
      * @static
      * @async
      */
     static async count(query = {}) {
         query = augmenter(this.defaults().query)(query)
 
-        return converter(this)(
-            await datastore(this)().count(query)
-        )
+        let cursor = datastore(this)().count(query),
+            exec = cursor.exec
+
+        cursor.exec = async () => {
+            return converter(this)(
+                await exec.call(cursor)
+            )
+        }
+
+        return cursor
     }
 
     /**
