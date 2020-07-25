@@ -33,9 +33,9 @@ to see all of them!
 const { Model } = require('nedb-models')
 
 class Book extends Model {
-	static datastore() {
-      	return {
-        	filename: 'books.db'
+    static datastore() {
+        return {
+            filename: 'books.db'
         }
             
         // same as
@@ -57,7 +57,7 @@ let book = Book.findOne()
 
 // sell it
 book.sell().then(book => {
-	// Book { soldAt: XXXXXX, ... }
+    // Book { soldAt: XXXXXX, ... }
 })
 ```
 
@@ -73,7 +73,7 @@ To implement them in your model, all you have to do is:
 const { Model, Timestamps, SoftDeletes, Encryption } = require('nedb-models')
 
 class Book extends Model {
-	...
+    ...
 }
 
 Book.use(SoftDeletes)
