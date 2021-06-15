@@ -4,6 +4,9 @@
 
 Check out the [docs](https://github.com/bajankristof/nedb-models/blob/master/docs.md)!
 
+##### IMPORTANT
+**As of `nedb-promises` `5.0.0` [nedb](https://github.com/louischatriot/nedb#readme) package has been replaced with a fork of the original package, [@seald-io/nedb](https://github.com/seald/nedb) to solve some vulnerability issues originating from `nedb`!**
+
 ## Contents
 - [Installation](#installation)
 - [Usage](#usage)
